@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LunchInGridCity {
+public class LunchInGridCity_MBA {
     private static int fixRow(int f, int r, int c) {
         if (f < 1) return 1;
         if (f > r) return r;

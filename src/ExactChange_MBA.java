@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-public class ExactChange {
+public class ExactChange_MBA {
 
     private static int[] solve2(int[] coins, int n, int s) {
         int[][] dp1 = new int[n+1][20001];

@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class PowerCrisis {
+public class PowerCrisis_MBA {
 
     private static boolean isValid(int[] arr) {
         int n = arr.length;

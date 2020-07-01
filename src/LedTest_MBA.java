@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class LEDTest {
+public class LedTest_MBA {
 
     private static int[] codes = new int[]{63, 6, 91, 79, 102, 109, 125, 7, 127, 111};
     private static int getBitmask(int[] row) {

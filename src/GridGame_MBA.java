@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class GridGame {
+public class GridGame_MBA {
 
     private static long getHash(Set<Integer> crossedRows, Set<Integer> crossedCols, int n) {
         int[][] grid = new int[n][n];
