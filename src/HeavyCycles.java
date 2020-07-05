@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Main {
+public class HeavyCycles {
 
     static class UF {
 
