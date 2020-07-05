@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class HeavyCycles {
+public class ArcticNetwork {
 
     static class UF {
 
@@ -118,54 +118,50 @@ public class HeavyCycles {
 
     }
 
-    private static void solve(int n, List<List<Integer>> edgeList) {
-        List<List<Integer>> rejectedEdges = new ArrayList<>();
+    private static void solve(int n, double[][] squareDistance, List<List<Integer>> edgeList, int s) {
 
-        edgeList.sort(Comparator.comparingDouble(o -> o.get(2)));
+        edgeList.sort(Comparator.comparingDouble(o -> squareDistance[o.get(0)][o.get(1)]));
 
         UF uf = new UF(n);
-
+        double ans = 0;
+        int edgeCount = 0;
         for(List<Integer> edge: edgeList) {
             if(uf.find(edge.get(0)) != uf.find(edge.get(1))) {
+                edgeCount++;
+                ans = Math.max(ans, Math.sqrt(squareDistance[edge.get(0)][edge.get(1)]));
                 uf.union(edge.get(0), edge.get(1));
-            } else {
-                rejectedEdges.add(edge);
+                if (edgeCount > n-1-s) break;
             }
         }
 
-        if (rejectedEdges.isEmpty()) {
-            System.out.println("forest");
-            return;
-        }
-        StringBuilder str = new StringBuilder();
-        int len = rejectedEdges.size();
-        for(int i=0; i<len; i++) {
-            str.append(rejectedEdges.get(i).get(2));
-            if(i != len-1) str.append(" ");
-        }
-        System.out.println(str);
+        System.out.println(String.format("%.2f", ans));
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        while(true) {
+        int t = Integer.parseInt(reader.readLine());
+        while(t-->0) {
             String[] arr = reader.readLine().split("\\s+");
-            int n = Integer.parseInt(arr[0]);
-            int m = Integer.parseInt(arr[1]);
-            if(n==0 && m==0) break;
+            int s = Integer.parseInt(arr[0]);
+            int n = Integer.parseInt(arr[1]);
             List<List<Integer>> edgeList = new ArrayList<>();
-            for(int i=0; i<m; i++) {
+            int[][] nodes = new int[n][2];
+            for(int i=0; i<n; i++) {
                 arr = reader.readLine().split("\\s+");
-                int x = Integer.parseInt(arr[0]);
-                int y = Integer.parseInt(arr[1]);
-                int z = Integer.parseInt(arr[2]);
-                List<Integer> l = new ArrayList<>();
-                l.add(x);
-                l.add(y);
-                l.add(z);
-                edgeList.add(l);
+                nodes[i][0] = Integer.parseInt(arr[0]);
+                nodes[i][1] = Integer.parseInt(arr[1]);
             }
-            solve(n, edgeList);
+            double[][] squareDistance = new double[n][n];
+            for(int i=0; i<n; i++) {
+                for (int j = i + 1; j < n; j++) {
+                    squareDistance[i][j] = Math.pow(Math.abs(nodes[i][0] - nodes[j][0]), 2) + Math.pow(Math.abs(nodes[i][1] - nodes[j][1]), 2);
+                    List<Integer> l = new ArrayList<>();
+                    l.add(i);
+                    l.add(j);
+                    edgeList.add(l);
+                }
+            }
+            solve(n, squareDistance, edgeList, s);
         }
     }
 }

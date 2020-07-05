@@ -1,11 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class HeavyCycles {
+public class ACMContestAndBlackout {
 
     static class UF {
 
@@ -119,53 +117,65 @@ public class HeavyCycles {
     }
 
     private static void solve(int n, List<List<Integer>> edgeList) {
-        List<List<Integer>> rejectedEdges = new ArrayList<>();
 
         edgeList.sort(Comparator.comparingDouble(o -> o.get(2)));
 
         UF uf = new UF(n);
-
-        for(List<Integer> edge: edgeList) {
-            if(uf.find(edge.get(0)) != uf.find(edge.get(1))) {
-                uf.union(edge.get(0), edge.get(1));
-            } else {
-                rejectedEdges.add(edge);
+        int m = edgeList.size();
+        int indCounter = 0;
+        int[] indices = new int[n-1];
+        int minCost = 0;
+        for(int i=0; i<m; i++) {
+            List<Integer> edge = edgeList.get(i);
+            int u = edge.get(0);
+            int v = edge.get(1);
+            if(uf.find(u) != uf.find(v)) {
+                minCost += edge.get(2);
+                indices[indCounter++] = i;
+                uf.union(u, v);
             }
         }
+        int secondCost = Integer.MAX_VALUE;
+        for(int j=0; j<n-1; j++) {
+            int edgeInd = indices[j];
+            uf = new UF(n);
+            int cost = 0;
+            for(int i=0; i<m; i++) {
+                if(i != edgeInd) {
+                    List<Integer> edge = edgeList.get(i);
+                    int u = edge.get(0);
+                    int v = edge.get(1);
+                    if (uf.find(u) != uf.find(v)) {
+                        cost += edge.get(2);
+                        uf.union(u, v);
+                    }
+                }
+            }
+            if(uf.count == 1)
+            secondCost = Math.min(secondCost, cost);
+        }
+        System.out.println(minCost + " " + secondCost);
 
-        if (rejectedEdges.isEmpty()) {
-            System.out.println("forest");
-            return;
-        }
-        StringBuilder str = new StringBuilder();
-        int len = rejectedEdges.size();
-        for(int i=0; i<len; i++) {
-            str.append(rejectedEdges.get(i).get(2));
-            if(i != len-1) str.append(" ");
-        }
-        System.out.println(str);
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        while(true) {
+        int t = Integer.parseInt(reader.readLine());
+        while (t-- > 0) {
             String[] arr = reader.readLine().split("\\s+");
             int n = Integer.parseInt(arr[0]);
             int m = Integer.parseInt(arr[1]);
-            if(n==0 && m==0) break;
             List<List<Integer>> edgeList = new ArrayList<>();
-            for(int i=0; i<m; i++) {
-                arr = reader.readLine().split("\\s+");
-                int x = Integer.parseInt(arr[0]);
-                int y = Integer.parseInt(arr[1]);
-                int z = Integer.parseInt(arr[2]);
+            for (int i = 0; i < m; i++) {
                 List<Integer> l = new ArrayList<>();
-                l.add(x);
-                l.add(y);
-                l.add(z);
+                arr = reader.readLine().split("\\s+");
+                l.add(Integer.parseInt(arr[0]) - 1);
+                l.add(Integer.parseInt(arr[1]) - 1);
+                l.add(Integer.parseInt(arr[2]));
                 edgeList.add(l);
             }
             solve(n, edgeList);
         }
     }
 }
+
