@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class Main {
+public class Babel {
 
     private static void solve(Map<String, List<String>> wordToLang, Map<String, List<String>> langToWord, String o, String d, int m) {
         String[] words = new String[m];
