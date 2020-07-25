@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class ManyPathsOneDestination {
 
     private static void topSort(int u, List<List<Integer>> adjList, int[] dfs_num, List<Integer> ans) {
         dfs_num[u] = 1;
