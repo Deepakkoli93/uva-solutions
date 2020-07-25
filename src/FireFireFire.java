@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Main {
+public class FireFireFire {
 
     private static long dfs(int u, int flag, List<List<Integer>> adjList, boolean[] leaf, long[][] memo) {
         long ans = 0;
