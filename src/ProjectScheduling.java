@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class Main {
+public class ProjectScheduling {
 
     // 0 - white(unvisited), 1- black
     private static void topSort(int u, List<List<int[]>> adjList, int[] dfs_num, List<Integer> ans) {
