@@ -7,6 +7,10 @@ public class Test {
         String[] arr = s.split("\\.");
         System.out.println(Integer.parseInt(arr[0]));
         System.out.println(Integer.parseInt(arr[1]));
+        int neg = 5;
+        int orig = neg;
+        neg++;
+        System.out.println(neg + " " + orig);
 
     }
 }

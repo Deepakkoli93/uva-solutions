@@ -20,11 +20,12 @@ public class WalkingOnAGrid {
         long ans = 0;
         int originalNegSelected = negSelected;
         if (memo[i][j][from][negSelected] != -1) {
+//            System.out.println(i + " " + j + " " + from + " " + negSelected + " " + memo[i][j][from][negSelected]);
             return memo[i][j][from][negSelected];
         } else if (grid[i][j] < 0 && negSelected >= k) {
             ans = Integer.MIN_VALUE;
         } else if (i==n-1 && j==n-1){
-            ans = sum + grid[i][j];
+            ans = grid[i][j];
         } else if (from == 0){
             if(grid[i][j] < 0) {
                 negSelected = negSelected+1;
@@ -36,12 +37,15 @@ public class WalkingOnAGrid {
                 ans1 = dfs(grid, i+1, j, n, k, negSelected, 0, sum + grid[i][j], memo);
             }
             if (isValid(i, j+1, n)) {
-                ans2 = dfs(grid, i, j+1, n, k, negSelected, 1, sum + grid[i][j], memo);
+                ans2 =  dfs(grid, i, j+1, n, k, negSelected, 1, sum + grid[i][j], memo);
             }
             if (isValid(i, j-1, n)) {
                 ans3 = dfs(grid, i, j-1, n, k, negSelected, 2, sum + grid[i][j], memo);
             }
             ans = max3(ans1, ans2, ans3);
+            if(ans != Integer.MIN_VALUE) {
+                ans += grid[i][j];
+            }
         } else if (from == 1) {
             if(grid[i][j] < 0) {
                 negSelected = negSelected+1;
@@ -55,6 +59,9 @@ public class WalkingOnAGrid {
                 ans2 = dfs(grid, i, j+1, n, k, negSelected, 1, sum + grid[i][j], memo);
             }
             ans = Math.max(ans1, ans2);
+            if(ans != Integer.MIN_VALUE) {
+                ans += grid[i][j];
+            }
         } else {
             if(grid[i][j] < 0) {
                 negSelected = negSelected+1;
@@ -68,6 +75,9 @@ public class WalkingOnAGrid {
                 ans2 = dfs(grid, i, j-1, n, k, negSelected, 2, sum + grid[i][j], memo);
             }
             ans = Math.max(ans1, ans2);
+            if(ans != Integer.MIN_VALUE) {
+                ans += grid[i][j];
+            }
         }
         memo[i][j][from][originalNegSelected] = ans;
         return ans;
@@ -83,7 +93,11 @@ public class WalkingOnAGrid {
             }
         }
         long ans = dfs(grid, 0, 0, n, k, 0, 1, 0, memo);
-        System.out.println("Case " + t + ": " + ans);
+        if(ans == Integer.MIN_VALUE) {
+            System.out.println("Case " + t + ": impossible");
+        } else {
+            System.out.println("Case " + t + ": " + ans);
+        }
     }
 
     public static void main(String[] args) throws IOException {
