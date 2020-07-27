@@ -5,7 +5,7 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Queue;
 
-public class Main {
+public class GatheringFood {
 
     private static int p = 20437;
 
